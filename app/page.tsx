@@ -90,7 +90,16 @@ function GlowCard({ children, className = "", style }: { children: React.ReactNo
 // Main Landing Page
 // -----------------------------------------------------------------------------
 export default function LandingPage() {
+  const [activeIndex, setActiveIndex] = useState(0);
   const { scrollYProgress } = useScroll();
+  
+  const processSteps = [
+    { step: "01", icon: User, title: "Establish Baseline", desc: "Candidates enter the secure platform to begin dynamic baseline assessments." },
+    { step: "02", icon: Target, title: "Pattern Recognition", desc: "The engine maps behavioral and technical traits against millions of successful profiles." },
+    { step: "03", icon: LineChart, title: "Gap Analysis", desc: "We identify precise deficiencies and surface them through intense actionable intelligence." },
+    { step: "04", icon: Briefcase, title: "Placement", desc: "Perfect matching algorithm successfully pairs talent structure with organizational needs." }
+  ];
+
   const scrollVelocity = useVelocity(scrollYProgress);
   const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
   const skewVelocity = useTransform(smoothVelocity, [-1, 1], ["20deg", "-20deg"]);
@@ -233,23 +242,47 @@ export default function LandingPage() {
         {/* STICKY HOW IT WORKS SECTION */}
         <section id="how-it-works" className="py-0 relative">
           <div className="grid lg:grid-cols-2">
-            <div className="bg-black text-white p-12 md:p-16 lg:p-32 flex flex-col justify-center lg:sticky lg:top-0 h-fit lg:h-screen lg:rounded-tr-[100px]">
-              <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter mb-6">The Process.</h2>
-              <p className="text-lg lg:text-xl text-slate-400 font-medium max-w-md">A rigid, standardized pathway to discovering extraordinary human potential.</p>
+            {/* LEFT STICKY SECTION - DYNAMIC CONTENT */}
+            <div className="bg-black text-white p-12 md:p-16 lg:p-32 flex flex-col justify-center lg:sticky lg:top-0 h-fit lg:h-screen lg:rounded-tr-[100px] overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.div 
+                  key={activeIndex} 
+                  initial={{ opacity: 0, x: -20, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, x: 20, filter: "blur(10px)" }}
+                  transition={{ duration: 0.4, ease: "circOut" }}
+                  className="space-y-6"
+                >
+                  <div className="text-2xl md:text-3xl font-bold text-slate-500 uppercase tracking-[0.3em] mb-4">
+                    {processSteps[activeIndex].step} // Step Phase
+                  </div>
+                  <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter mb-6">
+                    {processSteps[activeIndex].title}.
+                  </h2>
+                  <p className="text-lg lg:text-xl text-slate-400 font-medium max-w-md leading-relaxed">
+                    {processSteps[activeIndex].desc}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
             </div>
             
+            {/* RIGHT SCROLLING SECTION */}
             <div className="p-8 md:p-16 lg:p-24 space-y-12 md:space-y-20 bg-slate-50">
-              {[
-                { step: "01", icon: User, title: "Establish Baseline", desc: "Candidates enter the secure platform to begin dynamic baseline assessments." },
-                { step: "02", icon: Target, title: "Pattern Recognition", desc: "The engine maps behavioral and technical traits against millions of successful profiles." },
-                { step: "03", icon: LineChart, title: "Gap Analysis", desc: "We identify precise deficiencies and surface them through intense actionable intelligence." },
-                { step: "04", icon: Briefcase, title: "Placement", desc: "Perfect matching algorithm successfully pairs talent structure with organizational needs." }
-              ].map((step, i) => (
-                <div key={i} className="relative z-10 flex flex-col group">
-                  <div className="text-5xl md:text-7xl font-black text-slate-200 mb-6 group-hover:text-black transition-colors">{step.step}</div>
+              {processSteps.map((step, i) => (
+                <motion.div 
+                  key={i} 
+                  initial={{ opacity: 0.3, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  onViewportEnter={() => setActiveIndex(i)}
+                  viewport={{ margin: "-40% 0px -40% 0px", once: false }}
+                  className="relative z-10 flex flex-col group min-h-[40vh] justify-center"
+                >
+                  <div className={`text-5xl md:text-8xl font-black mb-6 transition-all duration-500 ${activeIndex === i ? 'text-black scale-110' : 'text-slate-200 scale-100'}`}>
+                    {step.step}
+                  </div>
                   <h3 className="mb-4 text-2xl md:text-3xl font-bold tracking-tight">{step.title}</h3>
                   <p className="text-slate-500 text-base md:text-lg font-medium leading-relaxed">{step.desc}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
