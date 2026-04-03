@@ -1,15 +1,25 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const CHARS = "$%#@!*&^~+-_/\\{}[]0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-export function ScrambleText({ text, className = "", duration = 500 }: { text: string; className?: string; duration?: number }) {
+export function ScrambleText({ 
+  text, 
+  className = "", 
+  duration = 500,
+  hoverOnly = true 
+}: { 
+  text: string; 
+  className?: string; 
+  duration?: number;
+  hoverOnly?: boolean;
+}) {
   const [displayText, setDisplayText] = useState(text);
   const [isHovered, setIsHovered] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const startScramble = () => {
+  const startScramble = React.useCallback(() => {
     let iteration = 0;
     const steps = Math.max(text.length, 10);
     const stepDuration = duration / steps;
@@ -17,14 +27,13 @@ export function ScrambleText({ text, className = "", duration = 500 }: { text: s
     if (intervalRef.current) clearInterval(intervalRef.current);
 
     intervalRef.current = setInterval(() => {
-      setDisplayText((prev) =>
-        prev
+      setDisplayText(() =>
+        text
           .split("")
           .map((letter, index) => {
             if (index < iteration) {
               return text[index];
             }
-            // Preserve spaces
             if (text[index] === " ") return " ";
             return CHARS[Math.floor(Math.random() * CHARS.length)];
           })
@@ -35,21 +44,29 @@ export function ScrambleText({ text, className = "", duration = 500 }: { text: s
         if (intervalRef.current) clearInterval(intervalRef.current);
       }
 
-      iteration += 1 / 2; // Speed of deciphering
+      iteration += 1 / 2;
     }, stepDuration);
-  };
+  }, [text, duration]);
 
   useEffect(() => {
-    if (isHovered) {
+    if (!hoverOnly) {
       startScramble();
-    } else {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      setDisplayText(text); // Reset back immediately or gradually? Let's reset immediately on leave
+    }
+  }, [hoverOnly, startScramble]);
+
+  useEffect(() => {
+    if (hoverOnly) {
+      if (isHovered) {
+        startScramble();
+      } else {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+        setDisplayText(text);
+      }
     }
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [isHovered, text]);
+  }, [isHovered, text, hoverOnly, startScramble]);
 
   return (
     <span 

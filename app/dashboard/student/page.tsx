@@ -21,41 +21,40 @@ const radarData = [
 
 export default function StudentDashboard() {
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex justify-between items-end">
+    <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Welcome back, John!</h1>
-          <p className="text-muted-foreground mt-1">Here is your latest talent intelligence snapshot.</p>
+          <h1 className="text-2xl md:text-3xl font-black tracking-tighter text-black uppercase">Welcome back, John!</h1>
+          <p className="text-slate-500 font-medium text-sm md:text-base mt-1 italic">Intelligence Protocol: ACTIVE</p>
         </div>
-        <Button className="rounded-full shadow-lg gap-2">
+        <Button className="rounded-xl shadow-xl shadow-black/10 gap-2 h-12 px-6 bg-black text-white hover:bg-slate-800 font-bold transition-all w-full sm:w-auto">
           <Video className="h-4 w-4" /> Start Mock Interview
         </Button>
       </div>
 
       {/* METRIC CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {[
           { title: "Technical Score", val: 82, color: "bg-black", text: "text-black", icon: Trophy },
-          { title: "Behavioral Score", val: 76, color: "bg-slate-600", text: "text-slate-600", icon: Target },
-          { title: "Culture Fit", val: 89, color: "bg-slate-400", text: "text-slate-400", icon: Trophy },
-          { title: "Success Probability", val: 92, color: "bg-primary", text: "text-primary", icon: TrendingUp },
+          { title: "Behavioral Score", val: 76, color: "bg-slate-800", text: "text-slate-800", icon: Target },
+          { title: "Culture Fit", val: 89, color: "bg-slate-600", text: "text-slate-600", icon: Trophy },
+          { title: "Success Prob.", val: 92, color: "bg-black", text: "text-black", icon: TrendingUp },
         ].map((metric, i) => (
           <motion.div 
             key={i} 
-            initial={{ opacity: 0, y: 20 }} 
+            initial={{ opacity: 0, y: 10 }} 
             animate={{ opacity: 1, y: 0 }} 
-            transition={{ delay: i * 0.1 }}
+            transition={{ delay: i * 0.05 }}
           >
-            <Card className="p-6 relative overflow-hidden group hover:shadow-md transition-shadow bg-white border-none shadow-sm">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-border to-transparent group-hover:via-primary/50 transition-all"></div>
+            <Card className="p-5 md:p-6 relative overflow-hidden group hover:shadow-xl transition-all bg-white border border-slate-100 shadow-sm rounded-2xl">
               <div className="flex justify-between items-start mb-4">
-                <div className={`p-2 rounded-lg bg-muted ${metric.text}`}>
+                <div className={`p-2 rounded-xl bg-slate-50 border border-slate-100 ${metric.text}`}>
                   <metric.icon className="h-5 w-5" />
                 </div>
-                <span className={`text-2xl font-bold ${metric.text}`}>{metric.val}%</span>
+                <span className={`text-2xl font-black tabular-nums ${metric.text}`}>{metric.val}%</span>
               </div>
-              <h3 className="font-semibold text-muted-foreground mb-3">{metric.title}</h3>
-              <Progress value={metric.val} className={`h-1.5 [&>div]:${metric.color}`} />
+              <h3 className="font-bold text-xs uppercase tracking-widest text-slate-400 mb-4">{metric.title}</h3>
+              <Progress value={metric.val} className="h-1 bg-slate-100" />
             </Card>
           </motion.div>
         ))}
@@ -63,42 +62,42 @@ export default function StudentDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* RADAR CHART */}
-        <Card className="col-span-1 lg:col-span-2 p-6 bg-white border-none shadow-sm flex flex-col">
-          <h3 className="font-bold text-lg mb-6">Competency Radar</h3>
-          <div className="flex-1 min-h-[300px]">
+        <Card className="col-span-1 lg:col-span-2 p-6 bg-white border border-slate-100 shadow-sm rounded-2xl flex flex-col min-h-[400px]">
+          <h3 className="font-black text-xs uppercase tracking-widest text-slate-400 mb-8">Competency Matrix</h3>
+          <div className="flex-1 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
-                <PolarGrid stroke="#e5e7eb" />
-                <PolarAngleAxis dataKey="subject" tick={{ fill: '#6b7280', fontSize: 12 }} />
+              <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
+                <PolarGrid stroke="#f1f5f9" />
+                <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 700 }} />
                 <PolarRadiusAxis angle={30} domain={[0, 150]} tick={false} axisLine={false} />
-                <Radar name="Student" dataKey="A" stroke="#000000" fill="#000000" fillOpacity={0.2} />
+                <Radar name="Student" dataKey="A" stroke="#000000" strokeWidth={2} fill="#000000" fillOpacity={0.1} />
               </RadarChart>
             </ResponsiveContainer>
           </div>
         </Card>
 
         {/* AI INSIGHTS */}
-        <Card className="col-span-1 p-6 bg-primary/5 border border-primary/10 shadow-none flex flex-col relative overflow-hidden">
+        <Card className="col-span-1 p-6 bg-black text-white border-none shadow-2xl rounded-2xl flex flex-col relative overflow-hidden">
           <div className="absolute top-0 right-0 p-3 opacity-10">
-            <Bot className="h-32 w-32" />
+            <Bot className="h-32 w-32 text-white" />
           </div>
-          <div className="flex items-center gap-2 text-primary font-bold mb-6">
-            <Bot className="h-5 w-5" /> AI Coach Insights
+          <div className="flex items-center gap-2 text-white font-black uppercase text-xs tracking-widest mb-8 relative z-10">
+            <Bot className="h-4 w-4" /> AI_DIAGNOSTICS
           </div>
           
           <div className="space-y-4 relative z-10 flex-1">
-            <div className="bg-white p-4 rounded-xl shadow-sm text-sm border">
-              <span className="font-semibold text-black block mb-1">Strength Detected</span>
-              Your System Design approach in the last interview was top 10% among peers.
+            <div className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm">
+              <span className="font-black text-[10px] uppercase tracking-widest text-white/40 block mb-2">Peak Performance</span>
+              <p className="text-sm font-medium leading-relaxed">System Architecture logic parsing identified as Tier-1 competency.</p>
             </div>
-            <div className="bg-white p-4 rounded-xl shadow-sm text-sm border">
-              <span className="font-semibold text-slate-800 block mb-1">Improvement Area</span>
-              You struggled with dynamic programming under time pressure. Attempting to brute-force caused a 30% drop in debugging score.
+            <div className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm">
+              <span className="font-black text-[10px] uppercase tracking-widest text-white/40 block mb-2">Neural Gap</span>
+              <p className="text-sm font-medium leading-relaxed">Latency in recursive backtracking resolution. 12% drift from benchmark.</p>
             </div>
           </div>
           
-          <Button variant="outline" className="w-full mt-6 bg-white hover:bg-white/90 shadow-sm gap-2 text-primary border-primary/20">
-            View Training Plan <ArrowRight className="h-4 w-4" />
+          <Button variant="outline" className="w-full mt-8 bg-white text-black hover:bg-slate-100 border-none h-12 rounded-xl font-bold uppercase text-xs tracking-widest">
+            Execute Optimization <ArrowRight className="h-4 w-4 ml-2" />
           </Button>
         </Card>
       </div>

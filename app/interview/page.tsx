@@ -109,10 +109,10 @@ export default function InterviewInterface() {
         )}
       </AnimatePresence>
 
-      <div className="flex-1 flex overflow-hidden p-4 gap-4">
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden p-2 md:p-4 gap-4">
         
         {/* LEFT HUD: Question & Terminal */}
-        <div className="w-1/3 flex flex-col min-w-[400px] gap-4">
+        <div className="w-full lg:w-1/3 flex flex-col lg:min-w-[400px] gap-4 h-1/2 lg:h-full">
           
           <div className="flex-1 border border-white/10 bg-black relative p-6 overflow-hidden group">
             {/* HUD Corner Accents */}
@@ -141,14 +141,14 @@ export default function InterviewInterface() {
           </div>
 
           {/* AI Feedback Terminal */}
-          <div className="h-48 border border-white/10 bg-[#050505] p-4 flex flex-col relative overflow-hidden">
+          <div className="h-32 md:h-48 border border-white/10 bg-[#050505] p-4 flex flex-col relative overflow-hidden">
              <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2">
                 <div className="flex items-center gap-2 text-xs font-bold text-white/50">
                   <Terminal className="h-3 w-3" /> AI_DIAGNOSTICS
                 </div>
                 <div className="flex gap-1 animate-pulse">
                    {[1,2,3,4].map(i => (
-                     <div key={i} className={`w-1 bg-white/50 transition-all duration-75`} style={{ height: aiState === 'listening' ? \`\$\{Math.random() * 12 + 4\}px\` : '2px' }} />
+                     <div key={i} className="w-1 bg-white/50 transition-all duration-75" style={{ height: aiState === 'listening' ? `${Math.random() * 12 + 4}px` : '2px' }} />
                    ))}
                 </div>
              </div>
@@ -164,7 +164,7 @@ export default function InterviewInterface() {
         </div>
 
         {/* RIGHT HUD: Coding & Camera */}
-        <div className="flex-1 flex flex-col gap-4 relative">
+        <div className="flex-1 flex flex-col gap-4 relative h-1/2 lg:h-full">
           
           <div className="flex-1 border border-white/10 bg-[#0a0a0a] flex flex-col relative overflow-hidden group">
             {/* Top Bar Editor */}
@@ -188,7 +188,7 @@ export default function InterviewInterface() {
           </div>
 
           {/* FACIAL REC / TARGETING CAMERA */}
-          <div className="absolute top-4 right-4 w-64 aspect-video border border-white/20 bg-black shadow-2xl flex items-center justify-center overflow-hidden">
+          <div className="absolute top-2 right-2 md:top-4 md:right-4 w-32 md:w-64 aspect-video border border-white/20 bg-black shadow-2xl flex items-center justify-center overflow-hidden z-20">
              {/* Scanner Line */}
              <motion.div 
                animate={{ y: ["-100%", "200%"] }}

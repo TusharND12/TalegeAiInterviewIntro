@@ -18,53 +18,57 @@ const candidates = [
 
 export default function RecruiterDashboard() {
   return (
-    <div className="flex h-[calc(100vh-6rem)] gap-8">
+    <div className="flex flex-col lg:flex-row gap-6 md:gap-8 min-h-screen lg:h-[calc(100vh-8rem)]">
       
-      {/* LEFT SIDEBAR: FILTERS */}
-      <Card className="w-80 p-6 bg-white border-none shadow-sm flex flex-col shrink-0 h-full overflow-y-auto">
-        <h3 className="font-bold flex items-center gap-2 mb-6"><SlidersHorizontal className="h-5 w-5"/> Advanced Filters</h3>
+      {/* FILTER SIDEBAR / TOP BAR ON MOBILE */}
+      <Card className="w-full lg:w-80 p-6 bg-white border border-slate-100 shadow-sm flex flex-col shrink-0 h-fit lg:h-full overflow-y-auto rounded-2xl">
+        <h3 className="font-black text-xs uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2 mb-8">
+          <SlidersHorizontal className="h-4 w-4"/> Intelligence Filters
+        </h3>
         
-        <div className="space-y-6">
+        <div className="space-y-8">
           <div>
-            <label className="text-sm font-semibold mb-3 block">Role</label>
-            <Input placeholder="e.g. Frontend Developer" className="bg-muted/50 border-0" />
+            <label className="text-[10px] font-black uppercase tracking-widest mb-3 block text-slate-500">Target Role</label>
+            <Input placeholder="e.g. Frontend Developer" className="h-12 bg-slate-50 border-slate-100 focus-visible:ring-black rounded-xl" />
           </div>
           
           <div>
-            <div className="flex justify-between text-sm mb-3">
-              <span className="font-semibold">Minimum Fit Score</span>
-              <span className="text-primary font-bold">80%</span>
+            <div className="flex justify-between text-[10px] font-black uppercase tracking-widest mb-4">
+              <span className="text-slate-500">Minimum Fit Score</span>
+              <span className="text-black">80%</span>
             </div>
             <Slider defaultValue={[80]} max={100} step={1} className="py-4" />
           </div>
 
           <div>
-            <label className="text-sm font-semibold mb-3 block">Skills (Tags)</label>
+            <label className="text-[10px] font-black uppercase tracking-widest mb-3 block text-slate-500">Core Competencies</label>
             <div className="flex flex-wrap gap-2">
               {['React', 'Node.js', 'Python', 'AWS', 'System Design'].map(tag => (
-                <Badge key={tag} variant="outline" className="bg-muted/30 hover:bg-primary/10 hover:text-primary cursor-pointer border-border/50 text-muted-foreground">{tag}</Badge>
+                <Badge key={tag} variant="outline" className="px-3 py-1 rounded-lg bg-slate-50 text-slate-500 border-slate-100 hover:bg-black hover:text-white transition-colors border-none text-[10px] font-bold uppercase tracking-wider">{tag}</Badge>
               ))}
             </div>
           </div>
         </div>
         
-        <Button className="w-full mt-auto rounded-xl">Apply Filters</Button>
+        <Button className="w-full mt-10 h-12 rounded-xl bg-black text-white hover:bg-slate-800 font-bold uppercase text-[10px] tracking-widest shadow-xl shadow-black/10">Apply Parameters</Button>
       </Card>
 
-      {/* MAIN CONTENT RUN */}
+      {/* MAIN CANDIDATE FEED */}
       <div className="flex-1 space-y-6 flex flex-col h-full">
-        <div className="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm">
+        {/* Search & Sort Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-white p-2 md:p-4 rounded-2xl border border-slate-100 shadow-sm gap-4">
           <div className="relative w-full max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search candidates by name..." className="pl-10 border-none bg-muted/30 focus-visible:ring-0" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Input placeholder="Search identification units..." className="pl-12 border-none bg-slate-50 focus-visible:ring-0 h-12 rounded-xl text-sm" />
           </div>
-          <div className="flex items-center gap-2 px-4 border-l">
-            <span className="text-sm font-medium">Sort by:</span>
-            <span className="text-sm font-bold text-primary cursor-pointer">AI Recommendation</span>
+          <div className="hidden sm:flex items-center gap-4 px-6 border-l border-slate-100">
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Sort Matrix:</span>
+            <span className="text-xs font-black text-black cursor-pointer uppercase tracking-widest hover:underline underline-offset-4">Success Prob.</span>
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+        {/* List */}
+        <div className="flex-1 overflow-y-visible lg:overflow-y-auto space-y-4 lg:pr-2 pb-10 md:pb-0">
           {candidates.map((cand, i) => (
             <motion.div 
               key={i}
@@ -72,45 +76,61 @@ export default function RecruiterDashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
             >
-              <Card className={`p-5 border-none shadow-sm transition-all hover:shadow-md flex items-center gap-6 group ${cand.rec ? 'bg-primary/5 ring-1 ring-primary/20' : 'bg-white'}`}>
-                <Avatar className="h-16 w-16 border-2 border-white shadow-sm">
-                  <AvatarImage src="" />
-                  <AvatarFallback className="bg-primary/10 text-primary text-xl font-bold">{cand.name.charAt(0)}</AvatarFallback>
-                </Avatar>
+              <Card className={`p-4 md:p-6 border border-slate-100 shadow-sm transition-all hover:shadow-xl flex flex-col md:flex-row items-center gap-4 md:gap-8 group rounded-2xl ${cand.rec ? 'bg-white ring-2 ring-black/5 ring-inset' : 'bg-white'}`}>
                 
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-bold text-lg">{cand.name}</h3>
+                <div className="flex items-center gap-4 w-full md:w-auto">
+                  <Avatar className="h-16 w-16 md:h-20 md:w-20 rounded-2xl border-2 border-slate-50 shadow-inner">
+                    <AvatarFallback className="bg-black text-white text-xl font-black">{cand.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  
+                  <div className="flex-1 md:hidden">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-black text-lg text-black uppercase tracking-tighter">{cand.name}</h3>
+                    </div>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{cand.role}</p>
+                  </div>
+                </div>
+
+                <div className="flex-1 hidden md:block">
+                  <div className="flex items-center gap-2 mb-2">
+                    <h3 className="font-black text-xl text-black uppercase tracking-tighter">{cand.name}</h3>
                     {cand.rec && (
-                      <Badge variant="secondary" className="bg-primary/10 text-primary border-none shadow-none text-xs gap-1">
-                        <Sparkles className="h-3 w-3" /> AI Top Pick
+                      <Badge className="bg-black text-white border-none shadow-lg shadow-black/10 text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full">
+                        AI_TOP_PICK
                       </Badge>
                     )}
                   </div>
-                  <p className="text-sm text-muted-foreground mb-3">{cand.role}</p>
-                  <div className="flex gap-2">
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 leading-none">{cand.role}</p>
+                  <div className="flex flex-wrap gap-2">
                     {cand.tags.map(tag => (
-                      <Badge key={tag} variant="outline" className="bg-white text-xs border-border/40 font-medium">
+                      <Badge key={tag} className="bg-slate-50 text-slate-500 border-none text-[9px] font-bold uppercase px-2 py-0.5 rounded-md">
                         {tag}
                       </Badge>
                     ))}
                   </div>
                 </div>
 
-                <div className="flex gap-8 px-6 border-l border-border/50">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-emerald-500">{cand.fit}%</div>
-                    <div className="text-xs text-muted-foreground font-medium uppercase tracking-wide">Fit Score</div>
+                {/* Score section stays desktop-ish if possible but stacks label */}
+                <div className="flex w-full md:w-auto justify-between md:justify-end gap-4 md:gap-10 px-0 md:px-8 border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0">
+                  <div className="text-center md:text-left">
+                    <div className="text-xl md:text-3xl font-black text-black tabular-nums leading-none mb-2">{cand.fit}%</div>
+                    <div className="text-[9px] text-slate-400 font-black uppercase tracking-[0.2em]">Match_Acc</div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-primary">{cand.prob}%</div>
-                    <div className="text-xs text-muted-foreground font-medium uppercase tracking-wide">Success Rate</div>
+                  <div className="text-center md:text-left">
+                    <div className="text-xl md:text-3xl font-black text-black underline underline-offset-8 decoration-slate-200 tabular-nums leading-none mb-2">{cand.prob}%</div>
+                    <div className="text-[9px] text-slate-400 font-black uppercase tracking-[0.2em]">Success_Vector</div>
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Button size="icon" variant="outline" className="h-8 w-8 rounded-full bg-white"><FileText className="h-4 w-4"/></Button>
-                  <Button size="icon" className="h-8 w-8 rounded-full shadow-sm"><UserPlus className="h-4 w-4"/></Button>
+                <div className="flex md:flex-col gap-2 w-full md:w-auto mt-4 md:mt-0">
+                  <Button variant="outline" className="flex-1 md:h-10 md:w-10 rounded-xl border-slate-100 text-slate-400 hover:text-black hover:bg-slate-50">
+                    <FileText className="h-4 w-4"/>
+                    <span className="md:hidden ml-2 font-bold uppercase text-[10px]">Open Dossier</span>
+                  </Button>
+                  <Button className="flex-1 md:h-10 md:w-10 rounded-xl bg-black text-white hover:bg-slate-800 shadow-xl shadow-black/10">
+                    <UserPlus className="h-4 w-4"/>
+                    <span className="md:hidden ml-2 font-bold uppercase text-[10px]">Execute Action</span>
+                  </Button>
                 </div>
               </Card>
             </motion.div>

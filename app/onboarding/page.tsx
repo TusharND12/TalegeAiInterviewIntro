@@ -130,28 +130,28 @@ export default function OnboardingFlow() {
                 
                 <div className="space-y-4">
                   <div 
-                    className={`p-6 border-2 rounded-2xl cursor-pointer transition-all hover:border-black flex items-center space-x-6 group ${goal === "placement" ? "border-black bg-slate-100" : "bg-white border-slate-200"}`}
+                    className={`p-4 md:p-6 border-2 rounded-2xl cursor-pointer transition-all hover:border-black flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 md:gap-6 group ${goal === "placement" ? "border-black bg-slate-100" : "bg-white border-slate-200"}`}
                     onClick={() => setGoal("placement")}
                   >
-                    <div className={`p-4 rounded-full ${goal === "placement" ? "bg-black text-white" : "bg-slate-100 text-slate-600 group-hover:bg-slate-200"}`}>
+                    <div className={`p-4 rounded-full shrink-0 ${goal === "placement" ? "bg-black text-white" : "bg-slate-100 text-slate-600 group-hover:bg-slate-200"}`}>
                       <Building className="h-6 w-6" />
                     </div>
                     <div>
                       <h3 className="font-bold text-lg mb-1">Corporate Placement</h3>
-                      <p className="text-sm text-slate-500 font-medium">Tech roles, behavioral screening, system design.</p>
+                      <p className="text-sm text-slate-500 font-medium leading-tight">Tech roles, behavioral screening, system design.</p>
                     </div>
                   </div>
                   
                   <div 
-                    className={`p-6 border-2 rounded-2xl cursor-pointer transition-all hover:border-black flex items-center space-x-6 group ${goal === "exam" ? "border-black bg-slate-100" : "bg-white border-slate-200"}`}
+                    className={`p-4 md:p-6 border-2 rounded-2xl cursor-pointer transition-all hover:border-black flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 md:gap-6 group ${goal === "exam" ? "border-black bg-slate-100" : "bg-white border-slate-200"}`}
                     onClick={() => setGoal("exam")}
                   >
-                    <div className={`p-4 rounded-full ${goal === "exam" ? "bg-black text-white" : "bg-slate-100 text-slate-600 group-hover:bg-slate-200"}`}>
+                    <div className={`p-4 rounded-full shrink-0 ${goal === "exam" ? "bg-black text-white" : "bg-slate-100 text-slate-600 group-hover:bg-slate-200"}`}>
                       <GraduationCap className="h-6 w-6" />
                     </div>
                     <div>
                       <h3 className="font-bold text-lg mb-1">Competitive Examinations</h3>
-                      <p className="text-sm text-slate-500 font-medium">UPSC, GRE, structured verbal assessments.</p>
+                      <p className="text-sm text-slate-500 font-medium leading-tight">UPSC, GRE, structured verbal assessments.</p>
                     </div>
                   </div>
                 </div>
@@ -207,9 +207,9 @@ export default function OnboardingFlow() {
                   </div>
                   <div className="space-y-3">
                     <Label className="text-xs font-bold uppercase tracking-widest text-slate-400">Current Level</Label>
-                    <div className="grid grid-cols-3 gap-4 border p-2 rounded-2xl bg-white border-slate-200">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 border p-2 rounded-2xl bg-white border-slate-200">
                       {["Novice", "Intermediate", "Expert"].map(lvl => (
-                        <div key={lvl} className="text-center py-3 rounded-xl cursor-pointer hover:bg-slate-100 transition-colors text-sm font-bold text-slate-600 hover:text-black">
+                        <div key={lvl} className="text-center py-2 sm:py-3 rounded-xl cursor-pointer hover:bg-slate-100 transition-colors text-sm font-bold text-slate-600 hover:text-black">
                           {lvl}
                         </div>
                       ))}

@@ -3,13 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Building2, 
   GraduationCap, 
   LayoutDashboard, 
   LineChart, 
   UserCircle,
-  Users
+  Users,
+  X
 } from "lucide-react";
 
 const navItems = [
@@ -35,51 +37,79 @@ const navItems = [
   },
 ];
 
-export function AppSidebar() {
+interface AppSidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export function AppSidebar({ isOpen, onClose }: AppSidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 border-r bg-white min-h-screen flex flex-col items-start px-4 py-8 shadow-sm">
-      <Link href="/" className="flex items-center space-x-2 px-2 mb-8">
-        <div className="bg-primary p-1.5 rounded-lg">
-          <LayoutDashboard className="h-5 w-5 text-white" />
-        </div>
-        <span className="font-bold text-xl tracking-tight text-foreground">TalentIQ</span>
-      </Link>
-      
-      <div className="w-full flex-1 space-y-1">
-        <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-2">
-          Dashboards
-        </div>
-        {navItems.map((item) => {
-          const isActive = pathname === item.href;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200",
-                isActive 
-                  ? "bg-primary/5 text-primary shadow-sm" 
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
-              )}
-            >
-              <item.icon className={cn("h-4 w-4", isActive ? "text-primary" : "text-muted-foreground")} />
-              <span>{item.title}</span>
-            </Link>
-          );
-        })}
-      </div>
+    <>
+      {/* MOBILE OVERLAY */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 z-50 bg-black/60 md:hidden backdrop-blur-[2px]"
+          />
+        )}
+      </AnimatePresence>
 
-      <div className="w-full pt-4 border-t mt-auto">
-        <Link
-          href="/profile"
-          className="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:bg-muted transition-all duration-200"
-        >
-          <UserCircle className="h-4 w-4" />
-          <span>Profile</span>
+      <aside className={cn(
+        "fixed inset-y-0 left-0 z-50 w-72 border-r bg-white flex flex-col items-start px-4 py-8 shadow-2xl transition-transform duration-300 md:relative md:w-64 md:translate-x-0 md:shadow-sm md:flex shrink-0",
+        isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+      )}>
+        <button onClick={onClose} className="md:hidden absolute top-4 right-4 p-2 text-slate-400 hover:text-black">
+          <X className="h-6 w-6" />
+        </button>
+
+        <Link href="/" className="flex items-center space-x-2 px-2 mb-10">
+          <div className="bg-black p-2 rounded-xl shadow-lg">
+            <LayoutDashboard className="h-5 w-5 text-white" />
+          </div>
+          <span className="font-bold text-2xl tracking-tighter text-black">TalentIQ</span>
         </Link>
-      </div>
-    </aside>
+        
+        <div className="w-full flex-1 space-y-1.5">
+          <div className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4 px-3">
+            Navigation Unit
+          </div>
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => onClose()}
+                className={cn(
+                  "flex items-center space-x-3 px-4 py-3 rounded-2xl text-sm font-bold transition-all duration-200",
+                  isActive 
+                    ? "bg-black text-white shadow-[0_10px_20px_-5px_rgba(0,0,0,0.3)]" 
+                    : "text-slate-500 hover:bg-slate-50 hover:text-black"
+                )}
+              >
+                <item.icon className={cn("h-5 w-5", isActive ? "text-white" : "text-slate-400")} />
+                <span>{item.title}</span>
+              </Link>
+            );
+          })}
+        </div>
+
+        <div className="w-full pt-4 border-t border-slate-100 mt-auto">
+          <Link
+            href="/profile"
+            className="flex items-center space-x-3 px-4 py-3 rounded-2xl text-sm font-bold text-slate-500 hover:bg-slate-50 hover:text-black transition-all duration-200"
+          >
+            <UserCircle className="h-5 w-5 text-slate-400" />
+            <span>Profile</span>
+          </Link>
+        </div>
+      </aside>
+    </>
   );
 }

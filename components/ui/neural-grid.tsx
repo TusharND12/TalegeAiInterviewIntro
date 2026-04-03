@@ -16,11 +16,11 @@ export function NeuralGrid() {
     canvas.width = width;
     canvas.height = height;
 
-    const nodes: { x: number; y: number; baseX: number; baseY: number; vx: number; vy: number }[] = [];
-    const spacing = 80;
+    const spacing = width < 768 ? 120 : 80;
     const rows = Math.ceil(height / spacing) + 2;
     const cols = Math.ceil(width / spacing) + 2;
 
+    const nodes: { x: number; y: number; baseX: number; baseY: number; vx: number; vy: number }[] = [];
     for (let i = -1; i < cols; i++) {
       for (let j = -1; j < rows; j++) {
         const x = i * spacing + (Math.random() * 20 - 10);
@@ -31,14 +31,20 @@ export function NeuralGrid() {
 
     let mouseX = -1000;
     let mouseY = -1000;
-    const radius = 250;
+    const radius = width < 768 ? 150 : 250;
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
     };
 
+    const handleTouchMove = (e: TouchEvent) => {
+      mouseX = e.touches[0].clientX;
+      mouseY = e.touches[0].clientY;
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("touchmove", handleTouchMove);
     
     let animationFrameId: number;
 
@@ -112,6 +118,7 @@ export function NeuralGrid() {
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
     };

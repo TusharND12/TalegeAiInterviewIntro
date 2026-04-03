@@ -7,14 +7,22 @@ export function FlashlightCTA() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: -1000, y: -1000 });
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const updatePosition = (x: number, y: number) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    setPosition({ x: x - rect.left, y: y - rect.top });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    updatePosition(e.clientX, e.clientY);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0];
+    updatePosition(touch.clientX, touch.clientY);
   };
 
   const handleMouseLeave = () => {
-    // Hide spotlight when mouse leaves
     setPosition({ x: -1000, y: -1000 });
   };
 
@@ -22,17 +30,20 @@ export function FlashlightCTA() {
     <section 
       ref={containerRef}
       onMouseMove={handleMouseMove}
+      onTouchMove={handleTouchMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full h-[60vh] md:h-[80vh] bg-black overflow-hidden flex flex-col items-center justify-center cursor-none"
+      className="relative w-full h-[60vh] md:h-[80vh] bg-black overflow-hidden flex flex-col items-center justify-center md:cursor-none"
     >
-      {/* Background Texture visible constantly (faint) */}
+      {/* Background Texture faint */}
       <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
 
       {/* Spotlight Reveal Mask Layer */}
       <div 
         className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-300"
         style={{
-          background: `radial-gradient(500px circle at ${position.x}px ${position.y}px, transparent 0%, rgba(0,0,0,0.98) 100%)`,
+          background: position.x === -1000 
+            ? 'radial-gradient(400px circle at center, transparent 0%, rgba(0,0,0,0.95) 100%)' 
+            : `radial-gradient(500px circle at ${position.x}px ${position.y}px, transparent 0%, rgba(0,0,0,0.98) 100%)`,
         }}
       />
 

@@ -135,7 +135,7 @@ export default function LandingPage() {
                 style={{ WebkitTextStroke: '2px black', color: 'transparent', animationDuration: '50s' }}
               >
                 {[...Array(4)].map((_, i) => (
-                  <span key={i} className="text-[15rem] font-black uppercase tracking-tighter mx-8">
+                  <span key={i} className="text-[8rem] md:text-[15rem] font-black uppercase tracking-tighter mx-8">
                     TALENT INTELLIGENCE
                   </span>
                 ))}
@@ -152,7 +152,7 @@ export default function LandingPage() {
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="mx-auto max-w-5xl text-6xl md:text-8xl font-black tracking-tighter text-foreground mb-8 leading-[1.1] flex flex-wrap justify-center gap-x-4 gap-y-2 origin-center"
+              className="mx-auto max-w-5xl text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter text-foreground mb-8 leading-[1.1] flex flex-wrap justify-center gap-x-4 gap-y-2 origin-center px-4"
             >
               {words.map((word, i) => (
                 <motion.span key={i} variants={wordVariants} className={i >= 4 ? "text-slate-400" : ""}>
@@ -211,7 +211,7 @@ export default function LandingPage() {
         <section id="features" className="py-32 relative">
           <div className="container mx-auto px-4 relative z-10">
             <div className="mb-20 text-center">
-              <h2 className="text-4xl md:text-5xl font-black tracking-tighter">
+              <h2 className="text-3xl md:text-5xl font-black tracking-tighter px-4">
                 <ScrambleText text="Architecture of Success" />
               </h2>
               <p className="mt-4 text-xl text-slate-500 font-medium max-w-2xl mx-auto">Comprehensive tools built directly into the fabric of modern evaluation.</p>
@@ -238,12 +238,12 @@ export default function LandingPage() {
         {/* STICKY HOW IT WORKS SECTION */}
         <section id="how-it-works" className="py-0 relative">
           <div className="grid lg:grid-cols-2">
-            <div className="bg-black text-white p-16 lg:p-32 flex flex-col justify-center sticky top-0 h-[50vh] lg:h-screen lg:rounded-tr-[100px]">
-              <h2 className="text-5xl lg:text-7xl font-black tracking-tighter mb-6">The Process.</h2>
-              <p className="text-xl text-slate-400 font-medium max-w-md">A rigid, standardized pathway to discovering extraordinary human potential.</p>
+            <div className="bg-black text-white p-12 md:p-16 lg:p-32 flex flex-col justify-center lg:sticky lg:top-0 h-fit lg:h-screen lg:rounded-tr-[100px]">
+              <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter mb-6">The Process.</h2>
+              <p className="text-lg lg:text-xl text-slate-400 font-medium max-w-md">A rigid, standardized pathway to discovering extraordinary human potential.</p>
             </div>
             
-            <div className="p-8 lg:p-32 space-y-32 bg-slate-50">
+            <div className="p-8 md:p-16 lg:p-32 space-y-20 md:space-y-32 bg-slate-50">
               {[
                 { step: "01", icon: User, title: "Establish Baseline", desc: "Candidates enter the secure platform to begin dynamic baseline assessments." },
                 { step: "02", icon: Target, title: "Pattern Recognition", desc: "The engine maps behavioral and technical traits against millions of successful profiles." },
@@ -251,9 +251,9 @@ export default function LandingPage() {
                 { step: "04", icon: Briefcase, title: "Placement", desc: "Perfect matching algorithm successfully pairs talent structure with organizational needs." }
               ].map((step, i) => (
                 <div key={i} className="relative z-10 flex flex-col group">
-                  <div className="text-7xl font-black text-slate-200 mb-6 group-hover:text-black transition-colors">{step.step}</div>
-                  <h3 className="mb-4 text-3xl font-bold tracking-tight">{step.title}</h3>
-                  <p className="text-slate-500 text-lg font-medium leading-relaxed">{step.desc}</p>
+                  <div className="text-5xl md:text-7xl font-black text-slate-200 mb-6 group-hover:text-black transition-colors">{step.step}</div>
+                  <h3 className="mb-4 text-2xl md:text-3xl font-bold tracking-tight">{step.title}</h3>
+                  <p className="text-slate-500 text-base md:text-lg font-medium leading-relaxed">{step.desc}</p>
                 </div>
               ))}
             </div>
@@ -264,7 +264,7 @@ export default function LandingPage() {
         <section className="bg-slate-100 relative pb-[20vh] overflow-hidden">
           {/* Faint Background Header */}
           <div className="sticky top-0 z-0 h-screen w-full flex flex-col items-center justify-center pointer-events-none">
-            <h2 className="text-[12rem] font-black tracking-tighter text-slate-200/50 uppercase leading-none text-center">
+            <h2 className="text-[6rem] md:text-[12rem] font-black tracking-tighter text-slate-200/50 uppercase leading-none text-center">
               Global <br/> Consensus
             </h2>
           </div>

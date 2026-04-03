@@ -26,70 +26,74 @@ const progressData = [
 
 export default function InstituteDashboard() {
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex flex-col md:flex-row justify-between md:items-end gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Institute Analytics</h1>
-          <p className="text-muted-foreground mt-1">Overview of student performance and placement readiness.</p>
+          <h1 className="text-2xl md:text-3xl font-black tracking-tighter text-black uppercase">Institute Analytics</h1>
+          <p className="text-slate-500 font-medium text-sm md:text-base mt-1 italic">Structural Assessment Protocol: ACTIVE</p>
         </div>
-        <div className="flex gap-3">
-          <Button variant="outline" className="bg-white"><Filter className="h-4 w-4 mr-2"/> Filter</Button>
-          <Button variant="outline" className="bg-white">Batch 2024 <ChevronDown className="h-4 w-4 ml-2"/></Button>
+        <div className="flex gap-2 w-full md:w-auto">
+          <Button variant="outline" className="flex-1 md:flex-none h-12 rounded-xl bg-white border-slate-100 text-slate-500 font-bold uppercase text-[10px] tracking-widest"><Filter className="h-4 w-4 mr-2"/> Filters</Button>
+          <Button variant="outline" className="flex-1 md:flex-none h-12 rounded-xl bg-white border-slate-100 text-slate-500 font-bold uppercase text-[10px] tracking-widest">Batch 2024 <ChevronDown className="h-4 w-4 ml-2"/></Button>
         </div>
       </div>
 
       {/* METRIC CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="p-6 bg-white border-none shadow-sm shrink-0">
-          <div className="flex justify-between items-start mb-2">
-            <h3 className="font-semibold text-muted-foreground">Overall Placement Readiness</h3>
-            <div className="p-2 bg-primary/10 rounded-lg text-primary"><BookOpen className="h-5 w-5"/></div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <Card className="p-6 bg-white border border-slate-100 shadow-sm rounded-2xl">
+          <div className="flex justify-between items-start mb-6">
+            <h3 className="font-black text-[10px] uppercase tracking-widest text-slate-400">Placement Readiness</h3>
+            <div className="p-2 bg-slate-50 border border-slate-100 rounded-xl text-black"><BookOpen className="h-4 w-4"/></div>
           </div>
-          <p className="text-3xl font-bold">78.5%</p>
-          <div className="text-sm text-black mt-2 font-medium">+4.2% from last month</div>
+          <p className="text-3xl md:text-4xl font-black tabular-nums text-black">78.5%</p>
+          <div className="text-[10px] font-bold text-black bg-slate-50 px-2 py-1 rounded-md mt-4 w-fit uppercase tracking-widest">+4.2% Momentum</div>
         </Card>
-        <Card className="p-6 bg-white border-none shadow-sm shrink-0">
-          <div className="flex justify-between items-start mb-2">
-            <h3 className="font-semibold text-muted-foreground">Active Candidates</h3>
-            <div className="p-2 bg-accent/10 rounded-lg text-accent"><Users className="h-5 w-5"/></div>
+        
+        <Card className="p-6 bg-white border border-slate-100 shadow-sm rounded-2xl">
+          <div className="flex justify-between items-start mb-6">
+            <h3 className="font-black text-[10px] uppercase tracking-widest text-slate-400">Active Units</h3>
+            <div className="p-2 bg-slate-50 border border-slate-100 rounded-xl text-black"><Users className="h-4 w-4"/></div>
           </div>
-          <p className="text-3xl font-bold">1,204</p>
-          <div className="text-sm text-muted-foreground mt-2">Across 4 departments</div>
+          <p className="text-3xl md:text-4xl font-black tabular-nums text-black">1,204</p>
+          <div className="text-[10px] font-bold text-slate-400 mt-4 uppercase tracking-widest italic">Across 4 Node Clusters</div>
         </Card>
-        <Card className="p-6 bg-primary text-white border-none shadow-md shrink-0 flex flex-col justify-between">
-          <h3 className="font-semibold text-primary-foreground/80">Critical Gap Alert</h3>
-          <p className="text-sm mt-2 leading-relaxed">System Design competency across CS Dept has dropped by 12%. Recommended action: Schedule expert workshop.</p>
-          <Button variant="secondary" size="sm" className="w-fit mt-4 bg-white text-primary hover:bg-white/90">Take Action</Button>
+
+        <Card className="p-6 bg-black text-white border-none shadow-2xl rounded-2xl flex flex-col justify-between sm:col-span-2 md:col-span-1">
+          <div className="mb-6">
+            <h3 className="font-black text-[10px] uppercase tracking-widest text-white/40 mb-4">Critical Vector Drift</h3>
+            <p className="text-sm font-medium leading-relaxed">System Architecture latency in CS Cluster dropped by 12%. Immediate optimization required.</p>
+          </div>
+          <Button variant="secondary" className="w-full h-10 bg-white text-black hover:bg-slate-100 font-bold uppercase text-[10px] tracking-widest rounded-xl">Execute Workshop</Button>
         </Card>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* BAR CHART */}
-        <Card className="p-6 bg-white border-none shadow-sm">
-          <h3 className="font-bold text-lg mb-6">Average Score by Department</h3>
+        <Card className="p-6 bg-white border border-slate-100 shadow-sm rounded-2xl min-h-[400px]">
+          <h3 className="font-black text-xs uppercase tracking-widest text-slate-400 mb-10">Cluster Performance Matrix</h3>
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
-              <RechartsBarChart data={barData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 12 }} dy={10} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 12 }} />
-                <Tooltip cursor={{ fill: 'rgba(0,0,0,0.05)' }} contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
-                <Bar dataKey="avgScore" fill="#000000" radius={[4, 4, 0, 0]} barSize={40} />
+              <RechartsBarChart data={barData} margin={{ top: 10, right: 10, left: -30, bottom: 0 }}>
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 700 }} dy={10} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 700 }} />
+                <Tooltip cursor={{ fill: '#f8fafc' }} contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)', fontSize: '12px', fontWeight: 'bold' }} />
+                <Bar dataKey="avgScore" fill="#000000" radius={[8, 8, 0, 0]} barSize={40} />
               </RechartsBarChart>
             </ResponsiveContainer>
           </div>
         </Card>
 
         {/* LINE CHART */}
-        <Card className="p-6 bg-white border-none shadow-sm">
-          <h3 className="font-bold text-lg mb-6">Performance Trend (Overall)</h3>
+        <Card className="p-6 bg-white border border-slate-100 shadow-sm rounded-2xl min-h-[400px]">
+          <h3 className="font-black text-xs uppercase tracking-widest text-slate-400 mb-10">Historical Growth Vector</h3>
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={progressData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
-                <XAxis dataKey="week" axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 12 }} dy={10} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 12 }} />
-                <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
-                <Line type="monotone" dataKey="score" stroke="#000000" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
+              <LineChart data={progressData} margin={{ top: 10, right: 10, left: -30, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                <XAxis dataKey="week" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 700 }} dy={10} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 700 }} />
+                <Tooltip contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)', fontSize: '12px', fontWeight: 'bold' }} />
+                <Line type="monotone" dataKey="score" stroke="#000000" strokeWidth={4} dot={{ r: 4, strokeWidth: 2, fill: '#fff', stroke: '#000' }} activeDot={{ r: 6 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
