@@ -1,59 +1,70 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Slider as SliderPrimitive } from "@base-ui/react/slider"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
-import { cn } from "@/lib/utils"
-
-function Slider({
-  className,
-  defaultValue,
-  value,
-  min = 0,
-  max = 100,
-  ...props
-}: SliderPrimitive.Root.Props) {
-  const _values = React.useMemo(
-    () =>
-      Array.isArray(value)
-        ? value
-        : Array.isArray(defaultValue)
-          ? defaultValue
-          : [min, max],
-    [value, defaultValue, min, max]
-  )
-
-  return (
-    <SliderPrimitive.Root
-      className={cn("data-horizontal:w-full data-vertical:h-full", className)}
-      data-slot="slider"
-      defaultValue={defaultValue}
-      value={value}
-      min={min}
-      max={max}
-      thumbAlignment="edge"
-      {...props}
-    >
-      <SliderPrimitive.Control className="relative flex w-full touch-none items-center select-none data-disabled:opacity-50 data-vertical:h-full data-vertical:min-h-40 data-vertical:w-auto data-vertical:flex-col">
-        <SliderPrimitive.Track
-          data-slot="slider-track"
-          className="relative grow overflow-hidden rounded-full bg-muted select-none data-horizontal:h-1 data-horizontal:w-full data-vertical:h-full data-vertical:w-1"
-        >
-          <SliderPrimitive.Indicator
-            data-slot="slider-range"
-            className="bg-primary select-none data-horizontal:h-full data-vertical:w-full"
-          />
-        </SliderPrimitive.Track>
-        {Array.from({ length: _values.length }, (_, index) => (
-          <SliderPrimitive.Thumb
-            data-slot="slider-thumb"
-            key={index}
-            className="relative block size-3 shrink-0 rounded-full border border-ring bg-white ring-ring/50 transition-[color,box-shadow] select-none after:absolute after:-inset-2 hover:ring-3 focus-visible:ring-3 focus-visible:outline-hidden active:ring-3 disabled:pointer-events-none disabled:opacity-50"
-          />
-        ))}
-      </SliderPrimitive.Control>
-    </SliderPrimitive.Root>
-  )
+interface SliderProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'defaultValue' | 'value' | 'onChange'> {
+  defaultValue?: number[];
+  value?: number[];
+  onValueChange?: (value: number[]) => void;
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
-export { Slider }
+const Slider = React.forwardRef<HTMLInputElement, SliderProps>(
+  ({ className, defaultValue, value, onValueChange, min = 0, max = 100, step = 1, ...props }, ref) => {
+    const [localValue, setLocalValue] = React.useState(
+      value ? value[0] : (defaultValue ? defaultValue[0] : min)
+    );
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = Number(e.target.value);
+      setLocalValue(newValue);
+      if (onValueChange) {
+        onValueChange([newValue]);
+      }
+    };
+
+    const percentage = ((localValue - min) / (max - min)) * 100;
+
+    return (
+      <div className={cn("relative flex w-full touch-none items-center select-none py-4", className)}>
+        {/* Track */}
+        <div className="relative h-1.5 w-full grow overflow-hidden rounded-full bg-slate-200">
+          {/* Indicator (Range Highlight) */}
+          <div 
+            className="absolute h-full bg-black transition-all duration-75" 
+            style={{ width: `${percentage}%` }}
+          />
+        </div>
+
+        {/* Hidden but functional Range Input */}
+        <input
+          ref={ref}
+          type="range"
+          min={min}
+          max={max}
+          step={step}
+          value={localValue}
+          onChange={handleChange}
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10 appearance-none"
+          {...props}
+        />
+
+        {/* Visual Thumb Overlay */}
+        <div 
+          className="absolute h-4 w-4 rounded-full border-2 border-black bg-white shadow-sm pointer-events-none transition-all duration-75 ease-out"
+          style={{ 
+            left: `calc(${percentage}% - 0.5rem)`,
+            transform: 'translateX(0)' 
+          }} 
+        />
+      </div>
+    );
+  }
+);
+
+Slider.displayName = "Slider";
+
+export { Slider };

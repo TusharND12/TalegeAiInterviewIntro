@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Search, Sparkles, SlidersHorizontal, UserPlus, FileText } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -18,9 +17,6 @@ const candidates = [
 ];
 
 export default function RecruiterDashboard() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
   return (
     <div className="flex h-[calc(100vh-6rem)] gap-8">
       
@@ -39,7 +35,7 @@ export default function RecruiterDashboard() {
               <span className="font-semibold">Minimum Fit Score</span>
               <span className="text-primary font-bold">80%</span>
             </div>
-            {mounted ? <Slider defaultValue={[80]} max={100} step={1} className="py-4" /> : <div className="h-8 py-4" />}
+            <Slider defaultValue={[80]} max={100} step={1} className="py-4" />
           </div>
 
           <div>
