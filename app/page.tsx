@@ -4,7 +4,6 @@ import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue, useVelocity } from "framer-motion";
 import { ArrowRight, Brain, Target, LineChart, Star, Sparkles, Building2, Briefcase, GraduationCap, User } from "lucide-react";
 import { Magnetic } from "@/components/ui/magnetic";
-import { BootSequence } from "@/components/ui/boot-sequence";
 import { NeuralGrid } from "@/components/ui/neural-grid";
 import { FlashlightCTA } from "@/components/ui/flashlight-cta";
 import { Button } from "@/components/ui/button";
@@ -91,7 +90,6 @@ function GlowCard({ children, className = "", style }: { children: React.ReactNo
 // Main Landing Page
 // -----------------------------------------------------------------------------
 export default function LandingPage() {
-  const [booted, setBooted] = useState(false);
   const { scrollYProgress } = useScroll();
   const scrollVelocity = useVelocity(scrollYProgress);
   const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
@@ -116,13 +114,10 @@ export default function LandingPage() {
   };
 
   return (
-    <>
-      {!booted && <BootSequence onComplete={() => setBooted(true)} />}
-      
-      <div className={`flex min-h-screen flex-col bg-background text-foreground relative z-0 transition-opacity duration-1000 ${booted ? "opacity-100" : "opacity-0 invisible"}`}>
-        <NeuralGrid />
-        <div className="absolute inset-0 bg-grid-pattern -z-30 opacity-[0.1]" style={{ maskImage: 'linear-gradient(to bottom, white, transparent)' }} />
-        <Navbar />
+    <div className="flex min-h-screen flex-col bg-white text-black relative z-0 transition-opacity duration-1000">
+      <NeuralGrid />
+      <div className="absolute inset-0 bg-grid-pattern -z-30 opacity-[0.05]" style={{ maskImage: 'linear-gradient(to bottom, white, transparent)' }} />
+      <Navbar />
       
       <main className="flex-1">
         {/* HERO SECTION */}
@@ -308,6 +303,5 @@ export default function LandingPage() {
       <Footer />
       <AICopilot />
     </div>
-    </>
   );
 }
