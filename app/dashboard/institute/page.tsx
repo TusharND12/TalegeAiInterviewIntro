@@ -58,12 +58,12 @@ export default function InstituteDashboard() {
           <div className="text-[10px] font-bold text-slate-400 mt-4 uppercase tracking-widest italic">Across 4 Node Clusters</div>
         </Card>
 
-        <Card className="p-6 bg-black text-white border-none shadow-2xl rounded-2xl flex flex-col justify-between sm:col-span-2 md:col-span-1">
-          <div className="mb-6">
-            <h3 className="font-black text-[10px] uppercase tracking-widest text-white/40 mb-4">Critical Vector Drift</h3>
-            <p className="text-sm font-medium leading-relaxed">System Architecture latency in CS Cluster dropped by 12%. Immediate optimization required.</p>
+        <Card className="p-6 bg-black text-white border-none shadow-2xl rounded-2xl flex flex-col sm:col-span-2 md:col-span-1">
+          <div className="mb-4">
+            <h3 className="font-black text-[10px] uppercase tracking-widest text-white/40 mb-3">Critical Vector Drift</h3>
+            <p className="text-xs font-medium leading-relaxed">System Architecture latency in CS Cluster dropped by 12%. Immediate optimization required.</p>
           </div>
-          <Button variant="secondary" className="w-full h-10 bg-white text-black hover:bg-slate-100 font-bold uppercase text-[10px] tracking-widest rounded-xl">Execute Workshop</Button>
+          <Button variant="secondary" className="w-full h-11 bg-white text-black hover:bg-slate-100 font-bold uppercase text-[10px] tracking-widest rounded-xl">Execute Workshop</Button>
         </Card>
       </div>
 

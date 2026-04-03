@@ -85,18 +85,18 @@ export default function StudentDashboard() {
             <Bot className="h-4 w-4" /> AI_DIAGNOSTICS
           </div>
           
-          <div className="space-y-4 relative z-10 flex-1">
-            <div className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm">
-              <span className="font-black text-[10px] uppercase tracking-widest text-white/40 block mb-2">Peak Performance</span>
-              <p className="text-sm font-medium leading-relaxed">System Architecture logic parsing identified as Tier-1 competency.</p>
+          <div className="space-y-3 relative z-10">
+            <div className="bg-white/5 border border-white/10 p-4 rounded-xl backdrop-blur-sm">
+              <span className="font-black text-[9px] uppercase tracking-widest text-white/40 block mb-1">Peak Performance</span>
+              <p className="text-xs font-medium leading-relaxed">System Architecture logic parsing identified as Tier-1 competency.</p>
             </div>
-            <div className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm">
-              <span className="font-black text-[10px] uppercase tracking-widest text-white/40 block mb-2">Neural Gap</span>
-              <p className="text-sm font-medium leading-relaxed">Latency in recursive backtracking resolution. 12% drift from benchmark.</p>
+            <div className="bg-white/5 border border-white/10 p-4 rounded-xl backdrop-blur-sm">
+              <span className="font-black text-[9px] uppercase tracking-widest text-white/40 block mb-1">Neural Gap</span>
+              <p className="text-xs font-medium leading-relaxed">Latency in recursive backtracking resolution. 12% drift from benchmark.</p>
             </div>
           </div>
           
-          <Button variant="outline" className="w-full mt-8 bg-white text-black hover:bg-slate-100 border-none h-12 rounded-xl font-bold uppercase text-xs tracking-widest">
+          <Button variant="outline" className="w-full mt-6 bg-white text-black hover:bg-slate-100 border-none h-11 rounded-xl font-bold uppercase text-[10px] tracking-widest">
             Execute Optimization <ArrowRight className="h-4 w-4 ml-2" />
           </Button>
         </Card>

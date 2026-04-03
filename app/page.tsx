@@ -126,7 +126,7 @@ export default function LandingPage() {
       
       <main className="flex-1">
         {/* HERO SECTION */}
-        <section className="relative overflow-hidden pt-32 pb-32 lg:pt-48 lg:pb-40 border-b">
+        <section className="relative overflow-hidden pt-24 pb-20 lg:pt-36 lg:pb-28 border-b">
           <div className="container relative mx-auto px-4 text-center z-10 flex flex-col items-center">
             {/* GHOST TYPOGRAPHY BACKGROUND: CONTINUOUS SLIDING */}
             <div className="absolute top-1/2 left-0 -translate-y-1/2 w-full overflow-hidden opacity-10 pointer-events-none -z-10">
@@ -208,7 +208,7 @@ export default function LandingPage() {
         </section>
 
         {/* FEATURES SECTION WITH GLOW CARDS */}
-        <section id="features" className="py-32 relative">
+        <section id="features" className="py-20 lg:py-24 relative">
           <div className="container mx-auto px-4 relative z-10">
             <div className="mb-20 text-center">
               <h2 className="text-3xl md:text-5xl font-black tracking-tighter px-4">
@@ -243,7 +243,7 @@ export default function LandingPage() {
               <p className="text-lg lg:text-xl text-slate-400 font-medium max-w-md">A rigid, standardized pathway to discovering extraordinary human potential.</p>
             </div>
             
-            <div className="p-8 md:p-16 lg:p-32 space-y-20 md:space-y-32 bg-slate-50">
+            <div className="p-8 md:p-16 lg:p-24 space-y-12 md:space-y-20 bg-slate-50">
               {[
                 { step: "01", icon: User, title: "Establish Baseline", desc: "Candidates enter the secure platform to begin dynamic baseline assessments." },
                 { step: "02", icon: Target, title: "Pattern Recognition", desc: "The engine maps behavioral and technical traits against millions of successful profiles." },
@@ -278,8 +278,8 @@ export default function LandingPage() {
               ].map((testimonial, i) => (
                 <div 
                   key={i} 
-                  className="sticky w-full mb-[50vh] transition-transform duration-500 ease-out"
-                  style={{ top: `calc(20vh + ${i * 3}rem)` }}
+                  className="sticky w-full mb-[15vh] transition-transform duration-500 ease-out"
+                  style={{ top: `calc(15vh + ${i * 2}rem)` }}
                 >
                   <GlowCard className="w-full bg-white/95 backdrop-blur-xl border border-slate-200 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] p-8 lg:p-12 text-left flex flex-col justify-between transform origin-top transition-all" style={{ zIndex: i }}>
                     <div>

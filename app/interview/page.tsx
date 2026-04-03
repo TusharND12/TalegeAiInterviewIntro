@@ -141,7 +141,7 @@ export default function InterviewInterface() {
           </div>
 
           {/* AI Feedback Terminal */}
-          <div className="h-32 md:h-48 border border-white/10 bg-[#050505] p-4 flex flex-col relative overflow-hidden">
+          <div className="h-28 md:h-36 border border-white/10 bg-[#050505] p-3 flex flex-col relative overflow-hidden">
              <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2">
                 <div className="flex items-center gap-2 text-xs font-bold text-white/50">
                   <Terminal className="h-3 w-3" /> AI_DIAGNOSTICS
